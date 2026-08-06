@@ -46,9 +46,9 @@ def evaluate(result_path, datasheet_path):
     """
 
     df1 = pd.read_excel(datasheet_path) 
-    file_names = df1["Previous File Name"].tolist()
+    file_names = df1["File Name"].tolist()
     epi_thicknesses = df1["Epithelial Thickness"].tolist()
-    optovue_thicknesses = df1["Optovue Thickness"].tolist()
+    optovue_thicknesses = df1["OCT-CET Thickness"].tolist()
     severities = df1["Severity"].tolist()
 
     # Load the slice name and average thickness number - make it so that it first checks for an actual value
