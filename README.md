@@ -16,34 +16,26 @@ conda activate lscd
 pip install -r requirements.txt
 ```
 
-Install PyTorch matching your CUDA version if the default wheel doesn't work:
-https://pytorch.org/get-started/locally/
-
-Training logs to Weights & Biases. Log in once with `wandb login`, or set
-`WANDB_MODE=disabled` to skip it.
-
-## Expected layout
+## Expected starting layout
 
 `pipeline.py` resolves all paths relative to the **current working directory**, so run
 it from a directory laid out like this:
 
 ```
 <working dir>/
-├── datasheet.xlsx        # Clinical metadata (required)
+├── datasheet.xlsx        # Clinical metadata
 ├── data/
-│   ├── raw_corneal/      # Input AS-OCT scans (.png)
-│   └── smoothed/         # Smoothed scans used for normalization
-└── results/              # Created and populated by the pipeline
+│   ├── raw/      # Input AS-OCT scans (in .png format)
 ```
 
 `datasheet.xlsx` must contain these columns:
 
 | Column | Used for |
 | --- | --- |
-| `Previous File Name` | Matching rows to image files |
+| `File Name` | Matching rows to image files |
 | `Severity` | Stratifying k-fold splits (`control` / `mild` / `moderate` / `severe`) |
 | `Epithelial Thickness` | Manual CET ground truth (M-CET) |
-| `Optovue Thickness` | Device-reported CET (OCT-CET) |
+| `OCT-CET Thickness` | Device-reported CET (OCT-CET) |
 
 The remaining subfolders under `data/` and `results/` are created automatically during
 preprocessing.
@@ -84,7 +76,7 @@ Without `torchrun`, training falls back to a single GPU.
 Example:
 
 ```bash
-PYTHONPATH=model python pipeline.py --model_type U_Net --folds 5 --num_epochs 100 --batch_size 32
+PYTHONPATH=model python pipeline.py --model_type MSU_Net --folds 5 --num_epochs 100 --batch_size 32
 ```
 
 ## What the pipeline does
@@ -104,16 +96,9 @@ PYTHONPATH=model python pipeline.py --model_type U_Net --folds 5 --num_epochs 10
 
 ## Outputs
 
-All results land in `results/`:
+After pipeline has run, all created files can be found in `results/`:
 
 - `UNet/UNet<N>/` — model checkpoints and per-fold predictions
 - `reconstructed_predictions/` — full-scan predicted masks
 - `thickness_npy/` — per-scan thickness arrays
 - `eval_images/` — `BoxPlot.png`, `Correlation_AI_CE.png`, `Correlation_OCT.png`
-
-## Notes
-
-- The histogram-matching reference image in `preprocessing.py` (`normalize`) is an
-  absolute path pointing at a specific machine. Change it to a path valid on your
-  system before running.
-- `pandas.read_excel` requires `openpyxl`, which is included in `requirements.txt`.
