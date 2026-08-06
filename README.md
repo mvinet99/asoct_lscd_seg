@@ -1,4 +1,4 @@
-# ascot_lscd_seg
+# ASOCT LSCD Corneal Epithelial Layer Segmentation
 
 Segmentation of the corneal epithelial layer in AS-OCT scans for Limbal Stem Cell
 Deficiency (LSCD), and estimation of corneal epithelial thickness (CET).
