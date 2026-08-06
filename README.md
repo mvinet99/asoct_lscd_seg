@@ -9,7 +9,7 @@ Everything runs from a single entry point: **`pipeline.py`**.
 
 ```bash
 git clone https://github.com/mvinet99/ascot_lscd_seg.git
-cd ascot_lscd_seg
+cd asoct_lscd_seg
 
 conda create -n lscd python=3.10
 conda activate lscd
