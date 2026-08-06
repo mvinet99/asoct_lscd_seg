@@ -62,7 +62,7 @@ Without `torchrun`, training falls back to a single GPU.
 | Flag | Default | Description |
 | --- | --- | --- |
 | `--mode` | `train` | Run mode |
-| `--model_type` | `MSU_Net` | Architecture: `U_Net` or `MSU_Net` |
+| `--model_type` | `MSU_Net` | Architecture |
 | `--img_ch` | `3` | Input channels |
 | `--output_ch` | `1` | Output channels |
 | `--batch_size` | `64` | Batch size |
