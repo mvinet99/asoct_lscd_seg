@@ -1,7 +1,7 @@
 # ASOCT LSCD Corneal Epithelial Layer Segmentation
 
 Segmentation of the corneal epithelial layer in AS-OCT scans for Limbal Stem Cell
-Deficiency (LSCD), and estimation of corneal epithelial thickness (CET).
+Deficiency (LSCD), and measurement of corneal epithelial thickness (CET).
 
 All code runs from the entry point script **`pipeline.py`**.
 
