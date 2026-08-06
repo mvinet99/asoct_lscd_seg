@@ -50,6 +50,7 @@ def make_splits(DATASHEET_PATH, result_path, num_folds=5, seed=42):
     files_list = sorted(os.listdir(os.path.join(result_path, 'mask_overlays_outlines')))
 
     for file in files_list:
+        n = file
         num = int(n[-1])
         n = n[:-1] + str(num)
         severity = severities[file_names.index(n)]

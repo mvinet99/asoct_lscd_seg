@@ -2,6 +2,7 @@
 import os
 import skimage
 import cv2 as cv
+import numpy as np
 from tqdm import tqdm
 from skimage import exposure, img_as_float, img_as_ubyte
 
@@ -40,7 +41,7 @@ def resize_im(data_path):
     """
     Resize OCT images to correct size for the project
     """
-    files = os.listdir(data_path + '/raw_corneal/')
+    files = os.listdir(data_path + '/raw/')
     resized_path = os.path.join(data_path, 'resized')
 
     for file in tqdm(files):
@@ -49,7 +50,7 @@ def resize_im(data_path):
         if os.path.exists(output_file):
             continue
         
-        im = cv.imread(data_path+'raw_corneal/' + file, cv.IMREAD_GRAYSCALE)
+        im = cv.imread(data_path+'/raw/' + file, cv.IMREAD_GRAYSCALE)
         resized_im = cv.resize(im, dsize=(2200, 820), interpolation=cv.INTER_CUBIC)
         cv.imwrite(output_file, resized_im)
 
@@ -57,18 +58,13 @@ def normalize(data_path):
     """
     Normalize OCT images using histogram equalization
     """
-    files = sorted(os.listdir(data_path+'/smoothed/')) 
+    files = sorted(os.listdir(data_path+'/raw/')) 
 
-    og_path = data_path+'/smoothed/'
+    og_path = data_path+'/raw/'
     normal_path = data_path + '/normal/'
 
-    # Load and prepare reference image
-    img_path = '/radraid2/mvinet/ASOCT/Current/data/crossline_02_02_26/smoothed/S0001894_slice_1.png'
-    ref_raw = cv.imread(img_path)
-    ref_raw = cv.resize(ref_raw, dsize=(2200, 820), interpolation=cv.INTER_CUBIC)
-
     # Perform equalization
-    ref_img = exposure.equalize_adapthist(ref_raw, clip_limit=0.005, kernel_size=[820,1], nbins=256) 
+    ref_img = exposure.equalize_adapthist(np.zeros((820, 2200)), clip_limit=0.005, kernel_size=[820,1], nbins=256) 
 
     for file in tqdm(files):
         input_file = og_path + file
@@ -103,7 +99,7 @@ def preprocess(data_path, result_path, folds):
     # Create needed paths for the pipeline - result files
     ensure_folder_exists(result_path, ['all_masks_overlays', 'mask_slices', 'reconstructed_masks', 'reconstructed_predictions',
                                      'thickness_npy', 'thickness_outlines', 'reconstructed_npy', 'patch_thickness',
-                                     'eval_images', 'blank_mask_outlines', 'mask_overlays_outlines', 'reconstructed_predictions_multiclass_color',
+                                     'eval_images', 'blank_mask_outlines', 'mask_overlays_outlines',
                                      'patches', 'patches/images/', 'patches/masks/', 'thickness_outlines_num']
                                      + unet_paths)
 

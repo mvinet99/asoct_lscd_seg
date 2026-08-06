@@ -17,9 +17,9 @@ def main():
     os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
 
     # Set paths
-    data_path = Path.cwd() + '/data/'
-    datasheet_path = Path.cwd() + '/datasheet.xlsx'
-    result_save_path = Path.cwd() + '/results/'
+    data_path = str(Path.cwd()) + '/data/'
+    datasheet_path = str(Path.cwd()) + '/datasheet.xlsx'
+    result_save_path = str(Path.cwd()) + '/results/'
 
     # Config for model parameters and training
     parser = argparse.ArgumentParser()
