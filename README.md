@@ -102,3 +102,6 @@ After pipeline has run, all created files can be found in `results/`:
 - `reconstructed_predictions/` — full-scan predicted masks
 - `thickness_npy/` — per-scan thickness arrays
 - `eval_images/` — `BoxPlot.png`, `Correlation_AI_CE.png`, `Correlation_OCT.png`
+
+## Model Weights
+The model weights are available to download from the following Google Drive link: https://drive.google.com/file/d/1Rfs8zfNElKHIL9WEk_sek8q72uVjPRmp/view?usp=share_link 
